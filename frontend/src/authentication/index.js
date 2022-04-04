@@ -14,7 +14,7 @@ const Authenticate = () => {
   };
   const Step = Steps[step];
   return (
-    <div className="container mx-auto">
+    <div className=" flex items-center justify-center screen-height bg-gradient-to-r from-pink-500 to-violet-500 flex-col">
       <Step onClick={changeStep} />
     </div>
   );
