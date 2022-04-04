@@ -10,3 +10,6 @@ body {
 .branding {
   font-family: "Rubik Wet Paint", cursive;
 }
+.screen-height {
+  min-height: calc(100vh - 70px);
+}
