@@ -14,7 +14,7 @@ const Navigation = () => {
           </span>
         </Link>
         <Link
-          to={"/register"}
+          to={"/authenticate"}
           className="bg-orange-500 py-1 px-4 flex justify-center items-center rounded-full hover:bg-orange-600 duration-300 ease-in-out"
         >
           <span className=" font-bold text-lg text-white ">Register</span>
