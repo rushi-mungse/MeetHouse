@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { RiUserVoiceFill } from "react-icons/ri";
 
 const Navigation = () => {
+  const pageHref = window.location.href;
+  const onAuthenticatePage = pageHref.includes("authenticate");
+
   return (
     <nav className="border-b border-gray-400 py-4 sm:px-0 px-4">
       <div className="container mx-auto flex items-center justify-between">
@@ -13,12 +16,14 @@ const Navigation = () => {
             MeetHouse
           </span>
         </Link>
-        <Link
-          to={"/authenticate"}
-          className="bg-orange-500 py-1 px-4 flex justify-center items-center rounded-full hover:bg-orange-600 duration-300 ease-in-out"
-        >
-          <span className=" font-bold text-lg text-white ">Register</span>
-        </Link>
+        {!onAuthenticatePage && (
+          <Link
+            to={"/authenticate"}
+            className="bg-orange-500 py-1 px-4 flex justify-center items-center rounded-full hover:bg-orange-600 duration-300 ease-in-out"
+          >
+            <span className=" font-bold text-lg text-white ">Register</span>
+          </Link>
+        )}
       </div>
     </nav>
   );
