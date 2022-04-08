@@ -1,5 +1,8 @@
 import Joi from "joi";
-import { hashService, OtpService } from "../services";
+import { REFRESH_JWT_TOKEN } from "../config";
+import { User } from "../models";
+import { hashService, JwtService, OtpService } from "../services";
+import { HandleCustomError } from "../services";
 class OtpController {
   async sendOtp(req, res, next) {
     const { userPhoneNumber } = req.body;
@@ -21,10 +24,61 @@ class OtpController {
 
     try {
       const hashOtp = await hashService.hashOtp(data);
-      return res.status(200).json({ phone: userPhoneNumber, otp, hashOtp });
+      const finalHashedOpt = `${hashOtp}.${expiry}`;
+      return res
+        .status(200)
+        .json({ phone: userPhoneNumber, otp, hashedOtp: finalHashedOpt });
     } catch (error) {
       console.log(error);
-      res.json({ msg: "error" });
+      return next(error);
+    }
+  }
+  async verifyOtp(req, res, next) {
+    const { phone, hash, otp } = req.body;
+
+    const otpSchema = Joi.object({
+      otp: Joi.string().length(4).required(),
+      phone: Joi.string()
+        .length(10)
+        .pattern(/^[0-9]+$/)
+        .required(),
+      hash: Joi.string().required(),
+    });
+
+    const { error } = otpSchema.validate(req.body);
+    if (error) return next(error);
+
+    const hashedOtp = hash.split(".")[0];
+    const expiry = hash.split(".")[1];
+
+    if (Date.now() > +expiry) {
+      return next(
+        HandleCustomError.handlingCustomError(500, "Otp has expired.")
+      );
+    }
+    const data = `${phone}.${otp}.${expiry}`;
+    try {
+      const valid = await hashService.verifyHash(data, hashedOtp);
+      if (!valid) {
+        return next(
+          HandleCustomError.handlingCustomError(401, "You entered wrong otp")
+        );
+      }
+      let user;
+      user = await User.findOne({ phone });
+      if (!user) {
+        user = await User.create({ phone });
+      }
+      const accessToken = await JwtService.signJwt({ _id: user._id });
+      const refreshToken = await JwtService.signJwt(
+        { _id: user._id },
+        REFRESH_JWT_TOKEN,
+        "1y"
+      );
+      return res.json({ accessToken, refreshToken });
+    } catch (error) {
+      console.log(error);
+      return next(error);
     }
   }
 }
