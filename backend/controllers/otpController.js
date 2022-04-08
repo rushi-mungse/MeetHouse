@@ -33,6 +33,7 @@ class OtpController {
       return next(error);
     }
   }
+
   async verifyOtp(req, res, next) {
     const { phone, hash, otp } = req.body;
 
@@ -65,9 +66,11 @@ class OtpController {
         );
       }
       let user;
-      user = await User.findOne({ phone });
+      user = await User.findOne({ phone }).select("-createdAt -updatedAt -__v");
       if (!user) {
-        user = await User.create({ phone });
+        user = await User.create({ phone }).select(
+          "-createdAt -updatedAt -__v"
+        );
       }
       const accessToken = await JwtService.signJwt({ _id: user._id });
       const refreshToken = await JwtService.signJwt(
@@ -76,7 +79,7 @@ class OtpController {
         "1y"
       );
 
-      const _refreshToken = await RefreshToken.create({
+      await RefreshToken.create({
         refreshToken,
       });
 
@@ -90,7 +93,7 @@ class OtpController {
         httpOnly: true,
       });
 
-      return res.json({ accessToken, refreshToken });
+      return res.json({ accessToken, refreshToken, user });
     } catch (error) {
       console.log(error);
       return next(error);

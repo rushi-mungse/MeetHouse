@@ -13,6 +13,8 @@ import Authenticate from "./authentication";
 import Activate from "./activate";
 import Rooms from "./pages/Rooms";
 import { Toaster } from "react-hot-toast";
+import store from "./store/store";
+import { Provider } from "react-redux";
 
 const isAuth = false;
 const user = {
@@ -21,7 +23,7 @@ const user = {
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <div>
         <Toaster
           position="top-right"
@@ -50,7 +52,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-    </>
+    </Provider>
   );
 }
 

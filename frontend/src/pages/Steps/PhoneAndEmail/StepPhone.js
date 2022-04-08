@@ -4,9 +4,12 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import toast from "react-hot-toast";
 import { sendOtp } from "../../../http";
+import { useDispatch } from "react-redux";
+import { setOtp } from "../../../store/slices/authSlice";
 
 const StepPhone = ({ onClick }) => {
   const [phone, setPhone] = useState();
+  const dispatch = useDispatch();
 
   const setPhoneNumber = (e) => {
     setPhone(e.target.value);
@@ -21,7 +24,8 @@ const StepPhone = ({ onClick }) => {
     }
     const { data } = await sendOtp({ userPhoneNumber: phone });
     console.log(data);
-    // onClick();
+    dispatch(setOtp({ phone: data.phone, hash: data.hashedOtp }));
+    onClick();
   };
 
   return (
