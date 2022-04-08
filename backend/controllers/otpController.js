@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { REFRESH_JWT_TOKEN } from "../config";
-import { User } from "../models";
+import { RefreshToken, User } from "../models";
 import { hashService, JwtService, OtpService } from "../services";
 import { HandleCustomError } from "../services";
 class OtpController {
@@ -75,6 +75,21 @@ class OtpController {
         REFRESH_JWT_TOKEN,
         "1y"
       );
+
+      const _refreshToken = await RefreshToken.create({
+        refreshToken,
+      });
+
+      res.cookie("accessToken", accessToken, {
+        maxAge: 1000 * 60 * 24 * 30,
+        httpOnly: true,
+      });
+
+      res.cookie("refreshToken", refreshToken, {
+        maxAge: 1000 * 60 * 24 * 30,
+        httpOnly: true,
+      });
+
       return res.json({ accessToken, refreshToken });
     } catch (error) {
       console.log(error);

@@ -4,7 +4,7 @@ export const {
   APP_PORT,
   DEBUG_MOD,
   HASH_SECRET,
-  ACCESS_JWT_TOKEN,
+  ACCESS_TOKEN_SECRET,
   REFRESH_JWT_TOKEN,
   DB_URL,
 } = process.env;
