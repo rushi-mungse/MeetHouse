@@ -9,7 +9,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex items-center justify-center screen-height bg-gradient-to-r from-pink-500 to-violet-500">
+    <div className="flex items-center justify-center screen-height bg-white">
       <Card heading="Welcome to MeetHouse!" img="logo">
         <p className="my-4 text-center text-lg text-gray-600">
           This is the voice chat application. You can create

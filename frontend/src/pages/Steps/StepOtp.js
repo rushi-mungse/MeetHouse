@@ -21,7 +21,7 @@ const StepOtp = () => {
     if (otp.length !== 4) return toast.error("Enter valid otp.");
     const { data } = await verifyOtp({ otp, phone, hash });
     dispatch(setAuth(data));
-    return toast.success("Verified your account.");
+    return toast.success("Your account verified.");
   };
 
   return (

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { RiUserVoiceFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
-  const pageHref = window.location.href;
-  const onAuthenticatePage = pageHref.includes("authenticate");
+  const { isAuth } = useSelector((state) => state.auth);
 
   return (
     <nav className="border-b border-gray-400 py-4 sm:px-0 px-4">
@@ -16,7 +16,7 @@ const Navigation = () => {
             MeetHouse
           </span>
         </Link>
-        {!onAuthenticatePage && (
+        {!isAuth && (
           <Link
             to={"/authenticate"}
             className="bg-orange-500 py-1 px-4 flex justify-center items-center rounded-full hover:bg-orange-600 duration-300 ease-in-out"
