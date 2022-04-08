@@ -15,11 +15,7 @@ import Rooms from "./pages/Rooms";
 import { Toaster } from "react-hot-toast";
 import store from "./store/store";
 import { Provider } from "react-redux";
-
-const isAuth = false;
-const user = {
-  activated: false,
-};
+import { useSelector } from "react-redux";
 
 function App() {
   return (
@@ -57,10 +53,12 @@ function App() {
 }
 
 const GuestRoute = () => {
+  const { isAuth } = useSelector((state) => state.auth);
   return isAuth ? <Navigate to={"/rooms"} /> : <Outlet />;
 };
 
 const SemiProtectedRoute = () => {
+  const { isAuth, user } = useSelector((state) => state.auth);
   return !isAuth ? (
     <Navigate to={"/"} />
   ) : isAuth && !user.activated ? (
@@ -71,6 +69,7 @@ const SemiProtectedRoute = () => {
 };
 
 const ProtectedRoute = () => {
+  const { isAuth, user } = useSelector((state) => state.auth);
   return !isAuth ? (
     <Navigate to={"/"} />
   ) : isAuth && !user.activated ? (

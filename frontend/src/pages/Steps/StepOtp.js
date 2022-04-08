@@ -7,7 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { verifyOtp } from "../../http";
 
-const StepOtp = ({ onClick }) => {
+const StepOtp = () => {
   const [otp, setOtp] = useState();
   const { phone, hash } = useSelector((state) => state.auth.otp);
   const dispatch = useDispatch();
@@ -17,14 +17,13 @@ const StepOtp = ({ onClick }) => {
   };
 
   const submit = async () => {
-    if (!otp) {
-      return toast.error("Please enter otp.");
-    }
+    if (!otp) return toast.error("Please enter otp.");
+    if (otp.length !== 4) return toast.error("Enter valid otp.");
     const { data } = await verifyOtp({ otp, phone, hash });
-    console.log(data);
     dispatch(setAuth(data));
-    // onClick()
+    return toast.success("Verified your account.");
   };
+
   return (
     <Card heading="Conformation Your Account." img="lock" backButton={true}>
       <Input placeholder={"Enter the opt"} onChange={getOtp} />
