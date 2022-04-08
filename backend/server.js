@@ -8,7 +8,7 @@ import cors from "cors";
 const app = express();
 
 const options = {
-  origin: "http:localhost:3000",
+  origin: "http://localhost:3000",
 };
 app.use(cors(options));
 

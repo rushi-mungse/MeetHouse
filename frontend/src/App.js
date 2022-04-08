@@ -12,6 +12,7 @@ import Footer from "./layouts/Footer";
 import Authenticate from "./authentication";
 import Activate from "./activate";
 import Rooms from "./pages/Rooms";
+import { Toaster } from "react-hot-toast";
 
 const isAuth = false;
 const user = {
@@ -20,22 +21,36 @@ const user = {
 
 function App() {
   return (
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route element={<GuestRoute />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/authenticate" element={<Authenticate />} />
-        </Route>
-        <Route element={<SemiProtectedRoute />}>
-          <Route path="/activate" element={<Activate />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
-          <Route path="/rooms" element={<Rooms />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </Router>
+    <>
+      <div>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            success: {
+              theme: {
+                primary: "#4aed88",
+              },
+            },
+          }}
+        />
+      </div>
+      <Router>
+        <Navigation />
+        <Routes>
+          <Route element={<GuestRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/authenticate" element={<Authenticate />} />
+          </Route>
+          <Route element={<SemiProtectedRoute />}>
+            <Route path="/activate" element={<Activate />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/rooms" element={<Rooms />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </Router>
+    </>
   );
 }
 
