@@ -6,4 +6,5 @@ export const {
   HASH_SECRET,
   ACCESS_JWT_TOKEN,
   REFRESH_JWT_TOKEN,
+  DB_URL,
 } = process.env;
