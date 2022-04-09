@@ -1,12 +1,28 @@
 import Card from "../../components/Card";
 import Button from "../../components/Button";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setAvatar } from "../../store/slices/activateSlice";
 
 const StepAvatar = ({ onClick }) => {
+  const dispatch = useDispatch();
+  const [image, setImage] = useState("/images/monkey-avatar.png");
+
+  const captureImg = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
+      dispatch(setAvatar(reader.result));
+    };
+  };
+  const submit = () => {};
   return (
     <Card heading="Choose Profile Picture" img="monkey-emoji" backButton={true}>
       <p className="my-4">How's this?</p>
-      <div className=" rounded-full border-2 border-black ">
-        <img src="/images/monkey-avatar.png" alt="monkey" className="h-44" />
+      <div className=" rounded-full border-4 border-orange-400 overflow-hidden ">
+        <img src={image} alt="monkey" className="h-44" />
       </div>
       <label
         htmlFor="avatar"
@@ -14,8 +30,13 @@ const StepAvatar = ({ onClick }) => {
       >
         Select profile picture?
       </label>
-      <input type="file" id="avatar" className="hidden" />
-      <Button onClick={onClick} />
+      <input
+        type="file"
+        id="avatar"
+        className="hidden "
+        onChange={captureImg}
+      />
+      <Button onClick={submit} />
     </Card>
   );
 };

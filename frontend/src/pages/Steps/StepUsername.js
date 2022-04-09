@@ -25,7 +25,11 @@ const StepUsername = ({ onClick }) => {
       img="google-emoji"
       backButton={true}
     >
-      <Input placeholder={"Enter username."} onChange={getUsername} />
+      <Input
+        placeholder={"Enter username."}
+        onChange={getUsername}
+        value={userName}
+      />
       <p className="mb-4 text-center text-gray-400">
         Enter unique username you want.
       </p>
