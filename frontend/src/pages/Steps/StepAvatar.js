@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAvatar } from "../../store/slices/activateSlice";
+import toast from "react-hot-toast";
 
 const StepAvatar = ({ onClick }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,12 @@ const StepAvatar = ({ onClick }) => {
       dispatch(setAvatar(reader.result));
     };
   };
-  const submit = () => {};
+  const submit = () => {
+    try {
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <Card heading="Choose Profile Picture" img="monkey-emoji" backButton={true}>
       <p className="my-4">How's this?</p>

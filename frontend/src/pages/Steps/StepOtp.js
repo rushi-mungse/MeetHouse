@@ -19,9 +19,13 @@ const StepOtp = () => {
   const submit = async () => {
     if (!otp) return toast.error("Please enter otp.");
     if (otp.length !== 4) return toast.error("Enter valid otp.");
-    const { data } = await verifyOtp({ otp, phone, hash });
-    dispatch(setAuth(data));
-    return toast.success("Your account verified.");
+    try {
+      const { data } = await verifyOtp({ otp, phone, hash });
+      dispatch(setAuth(data));
+      return toast.success("Your account verified.");
+    } catch (error) {
+      return toast.error(error.message);
+    }
   };
 
   return (

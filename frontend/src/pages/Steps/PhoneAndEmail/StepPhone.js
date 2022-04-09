@@ -22,10 +22,14 @@ const StepPhone = ({ onClick }) => {
     if (phone.length !== 10) {
       return toast.error("Please enter 10 digit phone number");
     }
-    const { data } = await sendOtp({ userPhoneNumber: phone });
-    console.log(data);
-    dispatch(setOtp({ phone: data.phone, hash: data.hashedOtp }));
-    onClick();
+    try {
+      const { data } = await sendOtp({ userPhoneNumber: phone });
+      console.log(data);
+      dispatch(setOtp({ phone: data.phone, hash: data.hashedOtp }));
+      onClick();
+    } catch (error) {
+      return toast.error(error.message);
+    }
   };
 
   return (
