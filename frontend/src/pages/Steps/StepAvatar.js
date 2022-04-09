@@ -1,13 +1,16 @@
 import Card from "../../components/Card";
 import Button from "../../components/Button";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAvatar } from "../../store/slices/activateSlice";
 import toast from "react-hot-toast";
+import { activate } from "../../http";
+import { setAuth } from "../../store/slices/authSlice";
 
 const StepAvatar = ({ onClick }) => {
   const dispatch = useDispatch();
   const [image, setImage] = useState("/images/monkey-avatar.png");
+  const { avatar, username, name } = useSelector((state) => state.activate);
 
   const captureImg = (e) => {
     const file = e.target.files[0];
@@ -18,12 +21,18 @@ const StepAvatar = ({ onClick }) => {
       dispatch(setAvatar(reader.result));
     };
   };
-  const submit = () => {
+
+  const submit = async () => {
     try {
+      const { data } = await activate({ avatar, username, name });
+      if (data.auth) {
+        dispatch(setAuth(data));
+      }
     } catch (error) {
       toast.error(error.message);
     }
   };
+
   return (
     <Card heading="Choose Profile Picture" img="monkey-emoji" backButton={true}>
       <p className="my-4">How's this?</p>

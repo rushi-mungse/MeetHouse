@@ -68,9 +68,7 @@ class OtpController {
       let user;
       user = await User.findOne({ phone }).select("-createdAt -updatedAt -__v");
       if (!user) {
-        user = await User.create({ phone }).select(
-          "-createdAt -updatedAt -__v"
-        );
+        user = await User.create({ phone });
       }
       const accessToken = await JwtService.signJwt({ _id: user._id });
       const refreshToken = await JwtService.signJwt(
