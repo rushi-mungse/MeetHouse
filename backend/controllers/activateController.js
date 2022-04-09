@@ -66,7 +66,6 @@ class ActivateController {
         refreshToken,
         REFRESH_JWT_TOKEN
       );
-      console.log(userData);
       if (!userData)
         return next(
           HandleCustomError.handlingCustomError(422, "Invalide token.")
@@ -79,18 +78,22 @@ class ActivateController {
 
     try {
       const token = await RefreshToken.findOne({ userId, refreshToken });
-      if (!token) return res.status(401).json({ message: "Invalide token." });
+      if (!token) return res.status(500).json({ message: "Invalide token." });
+
       const user = await User.findOne({ _id: userId });
       if (!user)
         return next(
           HandleCustomError.handlingCustomError(400, "User not found.")
         );
+
       const access_token = await JwtService.signJwt({ _id: userId });
       const refresh_token = await JwtService.signJwt(
         { _id: userId },
         REFRESH_JWT_TOKEN,
         "1y"
       );
+
+      await RefreshToken.updateOne({ userId }, { refreshToken: refresh_token });
 
       res.cookie("accessToken", access_token, {
         maxAge: 1000 * 60 * 24 * 30,

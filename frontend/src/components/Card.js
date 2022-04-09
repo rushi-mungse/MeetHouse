@@ -6,7 +6,7 @@ const Card = ({ heading, img, backButton, children }) => {
     navigate(-1);
   };
   return (
-    <div className="bg-gray-100 w-11/12 sm:w-11/12 md:w-2/3 lg:w-1/2 px-8 py-12 flex justify-center items-center flex-col rounded-lg mx-auto relative">
+    <div className="bg-gray-100 w-11/12 sm:w-11/12 md:w-2/3 lg:w-1/2 px-8 py-16 flex justify-center items-center flex-col rounded-lg mx-auto relative">
       {backButton && (
         <div
           className="absolute top-4 left-4 flex items-center justify-center bg-orange-500 px-4 py-1 rounded-md cursor-pointer"
