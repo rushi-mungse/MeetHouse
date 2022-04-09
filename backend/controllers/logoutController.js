@@ -6,8 +6,8 @@ class LogoutConroller {
     const userId = req.userId;
     try {
       await RefreshToken.deleteOne({ userId, refreshToken });
-      req.clearCookie("refreshToken");
-      req.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
+      res.clearCookie("accessToken");
       res.json({ user: null, auth: false });
     } catch (error) {
       console.log(error);
