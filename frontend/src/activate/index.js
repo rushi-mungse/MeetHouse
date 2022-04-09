@@ -16,7 +16,7 @@ const Activate = () => {
   };
   const Step = Steps[step];
   return (
-    <div className="container mx-auto">
+    <div className="flex items-center justify-center screen-height bg-white flex-col">
       <Step onClick={changeStep} />
     </div>
   );
