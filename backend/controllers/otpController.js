@@ -81,6 +81,7 @@ class OtpController {
 
       await RefreshToken.create({
         refreshToken,
+        userId: user._id,
       });
 
       res.cookie("accessToken", accessToken, {
