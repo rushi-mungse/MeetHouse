@@ -1,8 +1,9 @@
 import Joi from "joi";
 import jimp from "jimp";
 import path from "path";
-import { User } from "../models";
-import { HandleCustomError } from "../services";
+import { RefreshToken, User } from "../models";
+import { HandleCustomError, JwtService } from "../services";
+import { REFRESH_JWT_TOKEN } from "../config";
 
 class ActivateController {
   async activate(req, res, next) {
@@ -49,6 +50,58 @@ class ActivateController {
       user.name = name;
       user.username = username;
       user.save();
+      return res.json({ user, auth: true });
+    } catch (error) {
+      console.log(error);
+      return next(error);
+    }
+  }
+
+  async refresh(req, res, next) {
+    const { refreshToken } = req.cookies;
+    let userId;
+
+    try {
+      const userData = await JwtService.verifyJwt(
+        refreshToken,
+        REFRESH_JWT_TOKEN
+      );
+      console.log(userData);
+      if (!userData)
+        return next(
+          HandleCustomError.handlingCustomError(422, "Invalide token.")
+        );
+      userId = userData._id;
+    } catch (error) {
+      console.log(error);
+      return next(error);
+    }
+
+    try {
+      const token = await RefreshToken.findOne({ userId, refreshToken });
+      if (!token) return res.status(401).json({ message: "Invalide token." });
+      const user = await User.findOne({ _id: userId });
+      if (!user)
+        return next(
+          HandleCustomError.handlingCustomError(400, "User not found.")
+        );
+      const access_token = await JwtService.signJwt({ _id: userId });
+      const refresh_token = await JwtService.signJwt(
+        { _id: userId },
+        REFRESH_JWT_TOKEN,
+        "1y"
+      );
+
+      res.cookie("accessToken", access_token, {
+        maxAge: 1000 * 60 * 24 * 30,
+        httpOnly: true,
+      });
+
+      res.cookie("refreshToken", refresh_token, {
+        maxAge: 1000 * 60 * 24 * 30,
+        httpOnly: true,
+      });
+
       return res.json({ user, auth: true });
     } catch (error) {
       console.log(error);
