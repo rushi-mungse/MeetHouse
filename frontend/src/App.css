@@ -13,3 +13,17 @@ body {
 .screen-height {
   min-height: calc(100vh - 69px);
 }
+
+.text-after::after {
+  content: "";
+  top: 100%;
+  left: 0;
+  height: 3px;
+  width: 80%;
+  position: absolute;
+  background: #ea580b;
+}
+
+.ocean_green {
+  background-color: #a5eb00;
+}
