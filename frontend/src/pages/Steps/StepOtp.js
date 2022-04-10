@@ -29,7 +29,11 @@ const StepOtp = () => {
   };
 
   return (
-    <Card heading="Conformation Your Account." img="lock" backButton={true}>
+    <Card
+      heading="Conformation Your Account."
+      img="lock-emoji"
+      backButton={true}
+    >
       <Input placeholder={"Enter the opt"} onChange={getOtp} />
       <p className="mb-4 text-center text-gray-400">
         Enter OTP texted to you for conformation your account.
