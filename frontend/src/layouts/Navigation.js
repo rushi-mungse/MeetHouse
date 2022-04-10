@@ -25,17 +25,11 @@ const Navigation = () => {
     <nav className="border-b border-gray-400 py-4 sm:px-0 px-4">
       <div className="container mx-auto flex items-center justify-between">
         <Link to={"/"} className="flex items-center justify-center">
-          <span
-            className={`text-3xl mr-2 text-orange-600 ${
-              user?.activated ? "text-violet-400" : ""
-            }`}
-          >
+          <span className={`text-3xl mr-2 text-orange-600 `}>
             <RiUserVoiceFill />
           </span>
           <span
-            className={`text-3xl font-bold text-orange-600 branding tracking-wide ${
-              user?.activated ? "text-violet-400" : ""
-            }`}
+            className={`text-3xl font-bold text-orange-600 branding tracking-wide `}
           >
             MeetHouse
           </span>
@@ -52,7 +46,7 @@ const Navigation = () => {
           <div className="flex justify-center items-center">
             {user && user.activated && (
               <>
-                <h1 className="mr-4 text-violet-600 text-lg italic">
+                <h1 className="mr-4 text-orange-600 text-lg italic">
                   {user.username}
                 </h1>
                 <div className="h-12 w-12 rounded-full border-2 border-gray-900 overflow-hidden flex items-center justify-center mr-4">
@@ -66,7 +60,7 @@ const Navigation = () => {
             )}
             <button
               onClick={logoutBtn}
-              className="py-1 px-4 bg-violet-500 font-bold hover:bg-violet-600 duration-300 transition-all text-white"
+              className="py-1 px-4 bg-orange-500 font-bold hover:bg-orange-600 duration-300 transition-all text-white"
             >
               Logout
             </button>

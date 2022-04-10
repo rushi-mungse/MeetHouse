@@ -15,39 +15,46 @@ import Rooms from "./pages/Rooms";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import useLoadingWithRefresh from "./hooks/useLoadingWithRefresh";
+import Loader from "./layouts/Loader";
 
 function App() {
   const { loading } = useLoadingWithRefresh();
   return (
     <>
-      <div>
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            success: {
-              theme: {
-                primary: "#4aed88",
-              },
-            },
-          }}
-        />
-      </div>
-      <Router>
-        <Navigation />
-        <Routes>
-          <Route element={<GuestRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/authenticate" element={<Authenticate />} />
-          </Route>
-          <Route element={<SemiProtectedRoute />}>
-            <Route path="/activate" element={<Activate />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path="/rooms" element={<Rooms />} />
-          </Route>
-        </Routes>
-        <Footer />
-      </Router>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div>
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                success: {
+                  theme: {
+                    primary: "#4aed88",
+                  },
+                },
+              }}
+            />
+          </div>
+          <Router>
+            <Navigation />
+            <Routes>
+              <Route element={<GuestRoute />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/authenticate" element={<Authenticate />} />
+              </Route>
+              <Route element={<SemiProtectedRoute />}>
+                <Route path="/activate" element={<Activate />} />
+              </Route>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/rooms" element={<Rooms />} />
+              </Route>
+            </Routes>
+            <Footer />
+          </Router>
+        </>
+      )}
     </>
   );
 }
