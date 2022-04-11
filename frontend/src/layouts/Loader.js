@@ -1,7 +1,7 @@
 const Loader = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-1/2 rounded-lg bg-white flex items-center justify-center flex-col">
+      <div className="w-full rounded-lg bg-white flex items-center justify-center flex-col">
         <img
           src="/images/loader.png"
           alt="loader"

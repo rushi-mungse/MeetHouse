@@ -23,7 +23,7 @@ const useLoadingWithRefresh = () => {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [dispatch]);
 
   return { loading };
 };
