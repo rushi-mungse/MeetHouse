@@ -15,7 +15,8 @@ export const authSlice = createSlice({
     setAuth: (state, action) => {
       const { user } = action.payload;
       state.user = user;
-      if (state.user === null) {
+
+      if (state.user === null || !user) {
         state.isAuth = false;
       } else {
         state.isAuth = true;

@@ -16,11 +16,11 @@ const useLoadingWithRefresh = () => {
             withCredentials: true,
           }
         );
-        setLoading(false);
         dispatch(setAuth(data));
+        setLoading(false);
       } catch (error) {
         console.log(error);
-        setLoading(true);
+        setLoading(false);
       }
     })();
   }, []);

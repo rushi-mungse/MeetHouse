@@ -19,6 +19,7 @@ import Loader from "./layouts/Loader";
 
 function App() {
   const { loading } = useLoadingWithRefresh();
+
   return (
     <>
       {loading ? (

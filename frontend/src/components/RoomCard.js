@@ -10,7 +10,7 @@ const RoomCard = () => {
         </div>
         <div className="flex items-center justify-center">
           <img src="/images/chat-bubble.png" alt="chat" />
-          <h1 className="text-white ml-2">Rushikesh Mungse</h1>
+          <h1 className="text-yellow-500 ml-2">Rushikesh Mungse</h1>
         </div>
       </div>
       <div className="flex items-center justify-between mt-4">

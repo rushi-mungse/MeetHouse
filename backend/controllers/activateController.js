@@ -60,6 +60,9 @@ class ActivateController {
   async refresh(req, res, next) {
     const { refreshToken } = req.cookies;
     let userId;
+    if (!refreshToken) {
+      return res.status(500).json({ user: null, auth: false });
+    }
 
     try {
       const userData = await JwtService.verifyJwt(
