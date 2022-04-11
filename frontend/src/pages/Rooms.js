@@ -1,7 +1,16 @@
 import RoomCard from "../components/RoomCard";
+import { useState } from "react";
+import RoomModel from "../components/RoomModel";
 
 const Room = () => {
-  return (
+  const [createRoomPage, setCreateRoomPage] = useState(false);
+  const createRoom = () => {
+    setCreateRoomPage(true);
+  };
+  const closingCreateRoomPage = () => {
+    setCreateRoomPage(false);
+  };
+  return !createRoomPage ? (
     <div className="container mx-auto screen-height">
       <div className="flex justify-between items-center mt-8 ">
         <div className="flex items-center justify-center w-1/2">
@@ -21,7 +30,10 @@ const Room = () => {
             />
           </div>
         </div>
-        <button className="text-lg py-1 px-4 text-white font-bold bg-orange-500 hover:bg-orange-600 transition-all ease-in-out duration-300">
+        <button
+          className="text-lg py-1 px-4 text-white font-bold bg-orange-500 hover:bg-orange-600 transition-all ease-in-out duration-300"
+          onClick={createRoom}
+        >
           Create Room
         </button>
       </div>
@@ -40,6 +52,10 @@ const Room = () => {
         <RoomCard />
         <RoomCard />
       </div>
+    </div>
+  ) : (
+    <div>
+      <RoomModel closeCreateRoomPage={closingCreateRoomPage} />
     </div>
   );
 };
