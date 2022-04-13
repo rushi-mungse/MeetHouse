@@ -1,8 +1,11 @@
 import RoomCard from "../components/RoomCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoomModel from "../components/RoomModel";
+import { getRooms } from "../http";
+import toast from "react-hot-toast";
 
 const Room = () => {
+  const [rooms, setRooms] = useState([]);
   const [createRoomPage, setCreateRoomPage] = useState(false);
   const createRoom = () => {
     setCreateRoomPage(true);
@@ -10,6 +13,20 @@ const Room = () => {
   const closingCreateRoomPage = () => {
     setCreateRoomPage(false);
   };
+
+  useEffect(() => {
+    const getAllRooms = async () => {
+      try {
+        const { data } = await getRooms();
+        setRooms(data);
+      } catch (error) {
+        console.log(error);
+        return toast.error(error);
+      }
+    };
+    getAllRooms();
+  }, []);
+
   return !createRoomPage ? (
     <div className="container mx-auto screen-height">
       <div className="flex justify-between items-center mt-8 ">
@@ -39,18 +56,9 @@ const Room = () => {
       </div>
       <hr className="bg-orange-500 w-full h-1 mt-8" />
       <div className="grid grid-cols-4 gap-4 py-4">
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
-        <RoomCard />
+        {rooms.map((room) => {
+          return <RoomCard key={room._id} room={room} />;
+        })}
       </div>
     </div>
   ) : (

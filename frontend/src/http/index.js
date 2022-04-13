@@ -14,6 +14,7 @@ export const verifyOtp = async (data) => api.post("/api/verify-otp", data);
 export const activate = async (data) => api.post("/api/activate", data);
 export const logout = async () => api.post("/api/logout");
 export const createRoom = async (data) => api.post("/api/create-room", data);
+export const getRooms = async () => api.get("/api/get-rooms");
 
 api.interceptors.response.use(
   (config) => {
