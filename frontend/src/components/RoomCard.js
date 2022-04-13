@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 const RoomCard = ({ room }) => {
   return (
     <div className="flex  px-4 py-2 flex-col bg-gray-700 rounded-md ">
-      <h1 className="mb-4 text-orange-500 text-lg font-bold h-12 ">
-        {room.topic}
-      </h1>
+      <Link to={`/rooms/${room._id}`}>
+        <h1 className="mb-4 text-orange-500 text-lg font-bold h-12 ">
+          {room.topic}
+        </h1>
+      </Link>
       <div className="flex items-center justify-between">
         <div className="rounded-full h-12 w-12 border-2 border-orange-500 overflow-hidden flex items-center justify-center">
           {room.speakers.map((speaker) => {
