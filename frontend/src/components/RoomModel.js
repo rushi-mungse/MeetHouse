@@ -2,6 +2,7 @@ import Button from "../components/Button";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { createRoom } from "../http";
+import { useNavigate } from "react-router-dom";
 
 const RoomModel = ({ closeCreateRoomPage }) => {
   const styles = {
@@ -11,13 +12,14 @@ const RoomModel = ({ closeCreateRoomPage }) => {
 
   const [type, setType] = useState("open");
   const [topic, setTopic] = useState("");
+  const navigate = useNavigate();
 
   const getData = async () => {
     if (!topic) return toast.error("Please fill all fields");
     try {
       const payload = { topic, type };
       const { data } = await createRoom(payload);
-      console.log(data);
+      navigate(`/rooms/${data._id}`);
     } catch (error) {
       console.log(error);
       return toast.error(error);

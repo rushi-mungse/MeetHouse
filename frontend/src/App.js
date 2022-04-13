@@ -16,6 +16,7 @@ import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import useLoadingWithRefresh from "./hooks/useLoadingWithRefresh";
 import Loader from "./layouts/Loader";
+import Room from "./pages/Room";
 
 function App() {
   const { loading } = useLoadingWithRefresh();
@@ -50,6 +51,7 @@ function App() {
               </Route>
               <Route element={<ProtectedRoute />}>
                 <Route path="/rooms" element={<Rooms />} />
+                <Route path="/rooms/:id" element={<Room />} />
               </Route>
             </Routes>
             <Footer />
