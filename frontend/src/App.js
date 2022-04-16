@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import useLoadingWithRefresh from "./hooks/useLoadingWithRefresh";
 import Loader from "./layouts/Loader";
 import Room from "./pages/Room";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const { loading } = useLoadingWithRefresh();
@@ -52,6 +53,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="/rooms" element={<Rooms />} />
                 <Route path="/rooms/:id" element={<Room />} />
+                <Route path="/profile" element={<UserProfile />} />
               </Route>
             </Routes>
             <Footer />

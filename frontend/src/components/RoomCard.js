@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 const RoomCard = ({ room }) => {
+  const topic = room.topic;
   return (
     <div className="flex  px-4 py-2 flex-col bg-gray-700 rounded-md ">
       <Link to={`/rooms/${room._id}`}>
-        <h1 className="mb-4 text-orange-500 text-lg font-bold h-12 ">
-          {room.topic}
+        <h1 className="mb-4 text-orange-500 text-lg font-bold h-12 relative">
+          {topic.length > 60 ? `${topic.slice(0, 60)}...` : topic}
         </h1>
       </Link>
       <div className="flex items-center justify-between">
@@ -36,7 +37,7 @@ const RoomCard = ({ room }) => {
         </span>
         <span className="flex items-center justify-center text-white">
           <img src="/images/red-heart.png" alt="heart" className="h-5 mr-1" />:
-          <span className="ml-1 text-lg">40</span>
+          <span className="ml-1">40</span>
         </span>
       </div>
     </div>

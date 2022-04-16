@@ -46,9 +46,12 @@ const Navigation = () => {
           <div className="flex justify-center items-center">
             {user && user.activated && (
               <>
-                <h1 className="mr-4 text-orange-600 text-lg italic">
+                <Link
+                  to={"/profile"}
+                  className="mr-4 text-orange-600 text-lg italic"
+                >
                   {user.username}
-                </h1>
+                </Link>
                 <div className="h-12 w-12 rounded-full border-2 border-gray-900 overflow-hidden flex items-center justify-center mr-4">
                   <img
                     src={`${process.env.REACT_APP_BASE_URL}${user.avatar}`}
