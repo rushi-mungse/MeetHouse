@@ -5,8 +5,19 @@ import router from "./routes";
 import dbConnect from "./utils/database";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import http from "http";
+import { Server } from "socket.io";
 
+const port = APP_PORT || 5050;
 const app = express();
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
 app.use(cookieParser());
 const options = {
@@ -21,5 +32,11 @@ app.use(handleErrors);
 app.use("/uploads", express.static("uploads"));
 dbConnect();
 
-const port = APP_PORT || 5500;
-app.listen(port, console.log(`Server listening on port ${port}`));
+io.on("connection", (socket) => {
+  console.log(socket.id);
+  socket.on("hello", (data) => {
+    console.log(data);
+  });
+});
+
+server.listen(port, console.log(`Server listening on port ${port}`));
